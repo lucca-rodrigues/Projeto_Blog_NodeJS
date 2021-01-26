@@ -3,6 +3,8 @@ const app = express();
 const bodyParser = require("body-parser");
 const connection = require("./Database/connection");
 
+const categoriesController = require("./Controllers/ControllerCategories");
+
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
@@ -17,8 +19,10 @@ connection.authenticate()
     });
 
 app.get("/", (req, res) => {
-    res.send("Bem vindo!");
+    res.render("Pages/Home");
 })
+
+app.use("/", categoriesController);
 
 app.listen(8080, () => {
     console.log("Server starter in port 8080 ✅");
