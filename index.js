@@ -24,12 +24,13 @@ connection.authenticate()
         console.log(error);
     });
 
-app.get("/", (req, res) => {
-    res.render("Pages/Home");
-})
-
 app.use("/categories", ControllerCategories);
-app.use("/", ControllerArticles);
+app.use("/articles", ControllerArticles);
+
+// app.get("/", (req, res) => {
+//     res.render("Pages/Home");
+// })
+
 
 app.listen(8080, () => {
     console.log("Server starter in port 8080 ✅");
