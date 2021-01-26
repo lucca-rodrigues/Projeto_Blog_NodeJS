@@ -6,6 +6,7 @@ const slugify = require("slugify");
 router.get("/new", (req, res) => {
     res.render("Pages/Categories/New", );
 })
+
 router.get("/", (req, res) => {
     Categories.findAll()
     .then(categories => {
@@ -19,11 +20,27 @@ router.post("/new", (req, res) => {
     if(title != undefined){
         Categories.create({title, slug: slugify(title)})
         .then(() => {
-            res.redirect("/");
+            res.redirect("/categories");
         })
     }else{
         res.redirect("/categories/new");
     }
+})
+
+router.post("/delete", (req, res) => {
+    const id = req.body.id;
+    if(id != undefined){
+        if(!isNaN(id)){
+            Categories.destroy({where: {id}})
+            .then(() => {
+                res.redirect("/categories")
+            })
+        }
+    }
+    else{
+        res.redirect("/categories");
+    }
+    
 })
 
 
