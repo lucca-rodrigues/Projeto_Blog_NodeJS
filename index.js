@@ -28,7 +28,7 @@ app.get("/", (req, res) => {
     res.render("Pages/Home");
 })
 
-app.use("/", ControllerCategories);
+app.use("/categories", ControllerCategories);
 app.use("/", ControllerArticles);
 
 app.listen(8080, () => {

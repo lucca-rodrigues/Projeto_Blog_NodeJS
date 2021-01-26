@@ -11,6 +11,6 @@ const Categories = connection.define("categories", {
     }
 })
 
-Categories.sync({force: true}); // Atualiza a tabela
+//Categories.sync({force: true}); // Cria a tabela quando o projeto é executado
 
 module.exports = Categories;
