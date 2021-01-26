@@ -19,7 +19,7 @@
                         <th><%= slug %></th>
                         <th>
                             <a href="/admin/categories/edit/<%= id %>" class="btn btn-warning">Editar</a>     
-                            <form method="POST" action="/categories/delete" style="display: inline;" onsubmit="confirmOnDelete(e, this)">
+                            <form method="POST" action="/categories/delete" style="display: inline;" onsubmit="confirmOnDelete(event, this)">
                                 <input type="hidden" name="id" value="<%= id %>">
                                 <button class="btn btn-danger">Deletar</button>
                             </form>
@@ -33,8 +33,8 @@
 </body>
 <%- include('../../Components/Footer/index') %>
 <script>
-    function confirmOnDelete(e, form){
-        e.preventDefault();
+    function confirmOnDelete(event, form){
+        event.preventDefault();
 
         const decision = confirm("Você deseja remover esta categoria?")
         if(decision){
