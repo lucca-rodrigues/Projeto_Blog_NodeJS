@@ -11,6 +11,7 @@ router.get("/", (req, res) => {
         res.render("Pages/Articles/AllArticles",{articles: articles})
     });
 });
+
 router.get("/new", (req, res) => {
     Categories.findAll()
     .then(categories => {
@@ -29,6 +30,23 @@ router.post("/new", (req, res) => {
     }).then(() => {
         res.redirect("/articles");
     });
+});
+
+router.post("/delete", (req, res) => {
+    var id = req.body.id;
+
+    if(id != undefined){
+        if(!isNaN(id)){
+            Articles.destroy({where: {id}})
+            .then(() => {
+                res.redirect("/articles");
+            });
+        }else{
+            res.redirect("/articles");
+        }
+    }else{
+        res.redirect("/articles");
+    }
 });
 
 
