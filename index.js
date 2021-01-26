@@ -3,7 +3,13 @@ const app = express();
 const bodyParser = require("body-parser");
 const connection = require("./Database/connection");
 
-const categoriesController = require("./Controllers/ControllerCategories");
+// Controllers
+const ControllerCategories = require("./Controllers/ControllerCategories");
+const ControllerArticles = require("./Controllers/ControllerArticles");
+
+// Models
+const ModelCategories = require("./Models/ModelCategories");
+const ModelArticles = require("./Models/ModelArticles");
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
@@ -22,7 +28,8 @@ app.get("/", (req, res) => {
     res.render("Pages/Home");
 })
 
-app.use("/", categoriesController);
+app.use("/", ControllerCategories);
+app.use("/", ControllerArticles);
 
 app.listen(8080, () => {
     console.log("Server starter in port 8080 ✅");
