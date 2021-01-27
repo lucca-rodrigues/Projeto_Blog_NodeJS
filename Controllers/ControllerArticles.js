@@ -32,6 +32,41 @@ router.post("/new", (req, res) => {
     });
 });
 
+router.get("/edit/:id", (req, res) => {
+    var id = req.params.id;
+    Articles.findByPk(id).then(article => {
+        if(article != undefined){
+            Categories.findAll().then(categories => {
+                res.render("Pages/Articles/Edit", {categories, article})
+
+            });
+        }else{
+            res.redirect("/");
+        }
+    }).catch(err => {
+        res.redirect("/");
+    });
+});
+
+router.post("/update", (req, res) => {
+    var id = req.body.id;
+    var title = req.body.title;
+    var content = req.body.content;
+    var category = req.body.category;
+
+    Articles.update({
+        title, 
+        content, 
+        categoryId: category, 
+        slug:slugify(title)},{
+        where: {id}
+    }).then(() => {
+        res.redirect("/articles");
+    }).catch(err => {
+        res.redirect("/");
+    });
+});
+
 router.post("/delete", (req, res) => {
     var id = req.body.id;
 
