@@ -27,9 +27,38 @@ connection.authenticate()
 app.use("/categories", ControllerCategories);
 app.use("/articles", ControllerArticles);
 
-// app.get("/", (req, res) => {
-//     res.render("Pages/Home");
-// })
+
+// ARTICLES
+app.get("/", (req, res) => {
+    ModelArticles.findAll({
+        order:[
+            ['id','DESC']
+        ],
+        limit: 4
+    }).then(articles => {
+        ModelCategories.findAll().then(categories => {
+            res.render("Pages/Home/index", {articles, categories});
+        });
+    });
+});
+
+
+app.get("/:slug",(req, res) => {
+    var slug = req.params.slug;
+
+    ModelArticles.findOne({where: {slug}
+    }).then(article => {
+        if(article != undefined){
+            ModelCategories.findAll().then(categories => {
+                res.render("Pages/Articles/Details", {article, categories});
+            });
+        }else{
+            res.redirect("/");
+        }
+    }).catch( err => {
+        res.redirect("/");
+    });
+})
 
 
 app.listen(8080, () => {
