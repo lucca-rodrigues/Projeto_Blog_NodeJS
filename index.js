@@ -58,7 +58,27 @@ app.get("/:slug",(req, res) => {
     }).catch( err => {
         res.redirect("/");
     });
+});
+
+
+// SHOW ARTICLE CATEGORIES
+app.get("/category/:slug",(req, res) => {
+    var slug = req.params.slug;
+    ModelCategories.findOne({where: {slug},
+        include: [{model: ModelArticles}]
+    }).then( category => {
+        if(category != undefined){
+            ModelCategories.findAll().then(categories => {
+                res.render("Pages/Home/index",{articles: category.articles, categories: categories});
+            });
+        }else{
+            res.redirect("/");
+        }
+    }).catch( err => {
+        res.redirect("/");
+    })
 })
+
 
 
 app.listen(8080, () => {
